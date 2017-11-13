@@ -1,0 +1,656 @@
+		MANAGING USERS
+	 	--------------
+
+			useradd <username>
+		 	usermod <username>
+		 	userdel <username>
+************************************************************************************************************************************************************************
+		TEXT EDITOR
+		-----------
+
+What is vi?
+	It is a linux file editor.
+How to install?
+	It is by default
+		Vi Modes
+			1.Edit mode insert(i), append(a), replace(R)
+			2.Interactive (default)
+			3.Command :w,:q,:wq
+
+		INTERACTIVE MODE
+			yy ----> yanking or copying
+			yw ----> Yank word
+			p  ----> paste 			
+			dd ----> delete line or cut line
+			dw ----> delete word
+			x  ----> delete character
+			/pattern
+			3dd
+			3yy
+			3p
+			u ---->undo
+ 			ctrl+g ----> gives number of lines
+************************************************************************************************************************************************************************
+
+
+
+
+				PACKAGE MANAGEMENT 
+
+What is Package Management?
+	It is a mechanism to manage packages.used for the ease of files management.
+			
+What are the files in packages?
+	It has code/program, man, sample files, documents, configuration files, dependency files, security info, dependency information.
+			
+			redhat/centos    .rpm
+			ubuntu/debian    .dpkg
+			windows		 .msi (microsoft images)
+
+		
+			Tools used to manage packages
+			1. rpm ------------> Redhat Package Manager
+			2. yum ------------> Yellowdog Update Modifier. 
+
+Uses of rpm?
+To Install/Upgrade/Query/Modify/Remove
+
+		Query 
+			rpm -qa                   shows all installed packages.
+			    -ql <package name>    shows the list of all files associated with the package.
+			    -qf <file name>       shows the package associated 
+						  with the file.
+			    -qi <package name>    shows all the information about the package.
+
+			rpm -qip <package name>	  Shows information about the package to be installed (quiery info package)				 
+
+	Usuage of Query command.
+			rpm -qa | grep vi         shows output if vi is already
+ 					          in installed packages.
+			rpm -qa | wc -l           counts the number of packages 
+	Last installed packages
+			rpm -qa --last
+installed.
+			rpm -qa | less (or more)
+			
+
+		Package format
+	 		<package name><Version><Release><Archetect>
+	 			   el7      64 or 32
+How to find linux version 
+			cat /etc/redhat-release       for <=6.x
+			cat /etc/os-release           for >=7,x (or) ubuntu
+	
+How find linux archetect
+			uname -m 
+
+How to remove packages with rpm?
+			rpm -qa		to know the list of installed packages
+			rpm remove <package name>
+			rpm remove --nodeps 
+
+How to download packages?
+			wget <url>	
+			curl <url> -o <package name
+
+		Install
+			rpm -ivh <package name>
+				-i	install
+				-v	verbose
+				-h	To show progress with #######
+
+
+
+
+		YUM     Yellowdog Update Modifier
+
+What is yum?
+	Yum is a repo management tool.
+		repo = repository (collection of packages)
+Where do repo details stay in server?
+			/etc/repo.d
+How to know the list of repositories in server?
+			yum repolist
+		Yum commands
+			yum install <package name>
+			yum upgrade <package name>
+			yum info <package name>
+			Yum remove <package name>
+		Yum group commands
+			yum group list       Shows the list of groups installed
+			yum group install <group name>
+
+What is EPEL?
+	Extra Packages for Enterprise Linux.
+How to add EPEL repository?
+			wget <epel-release.rpm>
+			rpm -i <epel-release.rpm>
+			yum repolist 	to know the list of repositories
+************************************************************************************************************************************************************************
+
+
+
+
+
+
+						NETWORKING
+
+		Important things in Networking
+			Ip
+			Netmask
+			Gateway	
+			DNS
+What is IP?
+	It is the internet protocol and each and every device connected to internet has an IP.
+
+Mask/subnetmask/netmask?
+	It is the number which defines the boundary of your network.
+	225.225.225.225.0
+			
+What is Gateway?
+	It is the device/node through which packets will go out of our network.
+
+What is DNS?
+	Domain Name Service
+	It keeps the record of your node and its related info like name and IP address mapping.
+	
+What is Nat?
+	When your packets change network they will undergo NATing.
+	NATing : Assigning private IP to the packets when packets go out of the router.
+
+		 
+		My laptop---->Wifi router---->ISP---->
+
+			Public Ip    (visible to whole world)
+			Private Ip   (Visible only to our network)
+
+What are the type of IP's?
+			
+			Dynamic IP   (Changes with time   ex: Laptop)
+			Static IP    (No change with time ex: Servers)
+What is DHCP?
+	Dynamic Host Configuration Protocol.
+	It takes care of Ip, Netmask, DNS.
+
+
+Commands for Networking.
+		Windows			RHEL/CentOS 6.x			RHEL/CentOs 7.x
+IP		Ipconfig		Ifconfig			ip addr show
+Gateway		Ipconfig		netstat -nr			netstat -nr
+DNS		nslookup		nslookup			nslookup
+Network conn.	ping			ping				ping
+eth0 					eth0,1,...			enpos3,enpos8,...
+					wlan0,1,..			wlan0,1,...
+		lo         loop back 127.0.0.1(internal)
+		eth0       external
+
+How to use netstat?
+	Install net-tools package.
+			yum install net-tools
+ 	
+How to use nslookup?
+	Install bind-utils.
+			yum install bind-utils
+
+How to search a package name?
+			yum provides */<command>
+
+									
+Understanding Network configuration file.
+ 	file location
+			cd /etc/sysconfig/network-scripts/ifcg-<interface>	for RHEL 6.x and 7.x  
+			cd /etc/network/interfaces 				for Ubuntu    
+	make change and restart the network services 
+			service network restart 				for rhel 6.x
+			systemctl restart network service			for rhel 7.x
+			service network restart 				for ubuntu	
+
+
+How to give static IP in RHEL ?
+			onboot		= yes
+			bootproto	= static(or)none
+			IPADDR		= 192.192.182.114
+			Mask		= 225.225.225.0
+			Gateway		= 192.192.1.1
+			DNS1		= x.x.x.x
+			DNS2		= x.x.x.x
+			DNS3		= x.x.x.
+
+HOW TO CHECK NETWORK?
+			ip addr show
+			nslookup
+			netstat -nr
+			ping
+************************************************************************************************************************************************************************
+	
+						
+
+
+						GIT
+What is GIT?
+	It is a version control tool.
+
+Uses?
+	To keep track of different files and its versions.
+
+
+Some detauils about GIT?
+	Distributed code mananagement(Every clint is a data backup).
+	Can work ofline with all features.
+	Light weight on network(compresses while moving data).
+	Light weight on copy (Smart copy) 500Mb ---->copy---->5Mb
+
+Good news about git?
+	It has same commands on all Operating Systems.
+
+How to Install?
+			curl ftp://195.220.108.108/linux/epel/7/ppc64le/Packages/e/epel-release-7-11.noarch.rpm -o epel-release-7-11.noarch.rpm			
+			rpm -ivr epel-release		to add repository			
+			yum -y install git
+
+How to know git version?		
+			git --version 
+			     (or)
+			rpm -qa | grep git
+
+How to configure git?
+	git has three configurations
+				command				config file location
+	           1. 	git config --system .........		cd /etc/gitconfig	
+	 (user)	   2.	git config --global .........		cd ~/.gitconfig					Mostly used command
+		   3.   git config .................		cd project_directory/.git/config
+
+How to see git configuration?
+			git config --list		(or)							cd ~/.gitconfig
+	Global (user) configuration	
+			git config --global user.name "krishna"
+			git config --global user.email "krishna.chikballa@gmail.com"	
+			git config --global color.ui true
+			git config --global core.editor /usr/bin/vi    						which vi
+	Now check      	git config --list
+			      (or)			
+			cat /home/username/.gitconfig	
+
+How to setup project under git?
+		This is the folder whiich have to match with the local repository.
+			mkdir devops
+			cd devops
+			git init     
+			     will create .git folder
+			     will initialize the projec
+			     will create a skelton of git files and folders
+		
+How to see .git files structure?
+			tree .tree
+
+What does colors mean?	
+	red   (shows that files in working directory don't match with the local_repository )
+	green (these files are staged (or)added )
+
+Some git terminoloy?
+	working directory ------> Staged -------------------> Local repository
+        git add  ---------------> git commit -m "message"---> Moved into local repository and a commit or shal number is generated.
+  	
+What is git commit (or) shal number?
+	It is a unique and random generated when commit is done.
+		40 characters
+		Hexa,decimal (0-9,a-f) 
+		random
+		unique 
+		uses shal programming language:w
+
+Can manage with which length of shal number?
+		shal length	No. of files
+		5-7 		10,000		(small project)
+		10-12		10,00,000	(mid project)
+		15-17		1,00,00,000	(big project)	
+
+How to rename a file under git?
+			mv <old file name> <new name>		git mv <old name> <new name>
+			git add --all			(or)	git commit -m "message" 
+			git commit -m "message"			
+
+How to remove a file under git?
+			rm <old file name> <new name>		git rm <old name> <new name>
+			git add --all			(or)	git commit -m "message" 
+			git commit -m "message"	
+
+How to undo in git?
+	undo can be done in 3 stages
+		1. When removed from working directory. 	
+			rm <file name> 
+			git checkout <file name>
+		2. After adding or staging 
+			git reset HEAD <file name>		HEAD1,HEAD2,....
+		3. After commiting to local repositiry
+			git commit --append -am "message" 					SHOULD LEARN THIS COMMAND PROPERLY
+		   git can undo content, comment or both.
+
+What is git git Branch?	
+	It is the process of creating the copy of any existing branch.
+	copies both the  content 
+			  (and)
+			 messages
+What are the uses of new git branch?
+	It creates the following benefits
+		Copy of code
+		Its like a backup
+		You can make any changes and updates
+		Implement new ideas without disturbing the original.
+		Fix bugs
+		Add new features and enhancements
+
+What is the default branch?
+	Master
+
+How to see list of branches?
+			git branch
+How to create new branch?
+
+			git branch <new branch name>
+How to know the differences between branches?
+			git diff master..<newly created branch>
+How to jump to another branch?
+			git checkout <branch name>
+What is merging?
+	Mixing of files from different branches							MERGE NEVER ROLLBACKS (Always create a copy before merging)					git checkout master
+			git merge <another branch name>
+				master ---> source	
+				branch ---> target
+				all the files in the branch will be coppied into master.
+What is merge conflict?
+	If 2 developers are working on two different branches but on same file and same code then there can be a conflict when both the branches are merged. During 
+	merging the process willidentify these conflicts and show you on screen.We have to solve the conflicts and commit them.
+		You have to solve the conflict and create a branch with ticket number.
+
+How to rename a branc?
+			git branch -m <old branch name>	<new branch name>
+					(or)
+			git branch --move <old branch name> <new branch name
+
+How to remove a branch?
+			git branch -d <branch name>
+				  (or)
+			git branch -D <branch name>	(force delete)
+
+
+
+
+Git STASH
+
+What is git stash?
+	It is a temporaty area in git.
+	You can move the incomplete(half cooked) files into git stash at any time.
+	Can cut or copy paste from git stash.
+	It resides under .git folder.
+
+Some commands under stash
+			git stash save "comment"	------------> to add values in stash
+			git stash list 			------------> to list all the values in stash
+			git stash clear 		------------> to delete all sets in stash
+			git stash drop stash@{#}	------------> to drop a perticular value in stash
+			git stash apply stash@{#}	------------> to copy value from stash to branch
+			git stash pop stash@{#}		------------> to cut values frm stash to branch
+			git stash show stash@{#}	------------> to see files set info
+
+GIT SERVER
+
+What is Git server?
+	It can be an virtual server
+		     physical server	
+		     on-premise server
+		     cloud server
+	It holds the repository which can be accessed from anywhere in the world.
+
+Some of the git services
+	GitHub
+	BitBucket
+
+How to install Stand alone GitBucket server ?
+	1. Download GitBucket.war
+			wget https://github.com/gitbucket/gitbucket/releases/download/4.18.0/gitbucket.war
+	
+	2. Check java version, if not installed then install JAVA
+			java --version
+			yum -y install java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64     --------> Installs java
+	3. Setup hostname and ipaddress in /etc/hosts                  -------------------->(Not needed if connected with dhcp)
+			vi /etc/hosts
+			<IPaddress> devops-batch15.mycompany.com 	-------------------> Ip that you get from ifconfig
+	4.Stop firewall and SELinux (Security Enhanced Linux)
+		To stop firewall
+			
+				RHEL/CentOS 6.x			RHEL/CentOS 7.x
+			service iptables stop		systemctl stop firewalld.service		
+			chkconfig iptables off		systemctl disable firewalld.service
+					
+		To set permisssive for SELinux
+								
+				RHEL/CentOS 6.x and RHEL/CentOS 7.x
+			vi /etc/selinux/config  			
+			SELINUX=permissive			(OR) 		sudo setenforce 0	
+			:sq
+	5. Start your Git Bucket server.
+			java -jar gitbucket.war                  -----------> Default port 8080
+			java -jar gitbucket.war --port = 9090    -----------> to change port
+
+How to check that GitBucket server is running?
+	1. Know through process
+			ps -ef | grep gitbucket
+	2. Know through port listening
+			netstat -ntpl | grep 8080
+	3. Through browser
+			<localhost>:port_number  	------> for local host server
+			<Public IPaddress>:port_number  ------> for public servers
+
+How to connect GitBucket server?
+			<localhost>:port_number  	------> for local host server
+			<Public IPaddress>:port_number  ------> for public servers
+		default user/password	: root/root
+		NOTE: Change teh password and create new user name and password.
+	Commands to use remote Git server
+	
+			git remote add <alias> <serverUserName@URL of git repository>   -----> to create a new remote
+			git remote                                     ----------------------> to list all the remotes created
+			git push -u alias localbranch		       ----------------------> to send the committed data to fit server
+			git fetch alias 			       ----------------------> to bring data from server to remote    	
+????????????????	git merge link/master     git merge FETCH-HEAD ----------------------> to merge data from remote into local repository
+			git pull alias 				       ----------------------> directly brings data from the server to local repository
+			git push --delete alias branch name 	      ----------------------> to delete a branch in git server
+
+
+
+										(CIONE)
+					{------------}-----------------------------------------------> some repo can be cloned
+					{ GIT SERVER }...................
+					{------------}			.
+						|			.
+						| (FETCH) 		.	
+						V		       /\ (PUSH)           Pull = Fetch + Merge
+					|-----------------------|	.	
+					|    remote		|	.
+					| 	| 		|	.
+					|	| (MERGE)		.
+					|	V		|	.
+					|    local repo	.................
+					|       /\		|
+					|	|		|	
+					|	| (commit)	|
+					|			|
+					|  staging/cache	|
+					|       /\		|
+					|	| (add)		|
+					|	|		|
+					| Working directory	|	
+					|			|
+					|-----------------------|
+
+
+
+
+GIT COMMANDS
+				yum -y install git
+    user  configuration		git config --global user.name "krishna"
+				git config --global user.email "krishna.chikballa@gmail.com"	
+				git config --global color.ui true
+				git config --global core.editor /usr/bin/vi    						which vi
+    Now check      		git config --list
+    Initializing		mkdir devops
+				cd devops
+				git init
+				touch resume
+				git add resume (or) *
+				git commit -m "message"
+				git commit -am "message"                Here you can avoid git add 
+				git log				
+					git log --oneline
+					git log --since=yyyy-mm-dd
+					git log --author="pattrn"
+					git log --grep="pattern"	
+					git log -#       
+  				git status 
+  TO SHOW DIFFERENCE		git show <shal number>
+				git diff <shal1>..<shal2>
+				git mv <old name > <mew name>
+					git commit -m "message"
+				git rm <file name>
+					git commit -m "message"
+				rm <file name>
+					git checkout <file name>
+				git add <file name>
+					git reset HEAD <file name>
+				git commit -m "message"
+					git commit --amend -am "message"
+				git branch 
+				git branch <new branch name>
+				git diff <branch1>..<branch2>
+				git checkout <branch name>
+				git branch -m <old branch> <new branch>    (or)  git branch --move <old branch> <new branch>
+				git branch -d <branch name>    		  
+				git branch -D <branch name>
+				git log --oneline --decorate --graph --all
+
+
+
+
+
+
+
+*************************************************************************************************************************************************************
+	Apache/httpd
+	------------
+
+		Pachage			: httpd, mod_ssl  in RHEL/centos	apache2, libapache-mod-ssl  in Debian
+		Port			: 80, 443
+		Protocol		: http, https
+		config file		: /etc/httpd/conf/httpd.conf
+		Additional config files : /etc/httpd/conf.d
+		Server root		: /etc/httpd
+		Document root		: /var/www/html		---------------> It has all the web pages
+		Lod directory		: /var/log/httpd	---------------> Access and error log files are most used. 
+How to install Apache?
+			 	Rhel/centos			Debian
+			yum -y install httpd		apt-get install apache2
+			yum -y install mod_ssl		apt-get install libapache-mod-ssl
+
+	NOTE: We have to check wether firewall allows the httpd and SELinux configuration.
+
+How to start and enable https ?
+				RHEL/Centos 6.x			RHEL/Centos 7.x
+			service httpd start		systemctl start httpd.sevice
+			chkconfig httpd on		systemctl enable httpd.service
+			restart/reload/stop		restart/reload/stop
+
+How to check server is running or not?	
+
+	1. Know through process
+			ps -ef | grep httpd
+	2. Know through port listening
+			netstat -ntpl | grep 80
+	3. throug systemctl command
+			systemctl status httpd.service 
+	4. Through browser
+		GUI browser	
+			<localhost>:port_number  	------> for local host server
+			<Public IPaddress>:port_number  ------> for public servers
+		TYI browser  (Text User Interface)
+			elink (or) lynx
+
+How to check the syntax of Configuration file?
+				
+				RHEL/Centos 6.x			RHEL/Centos 7.x
+			httpd -t 			httpd -t
+			service httpd configtest	systemctl configtest httpd.service
+
+	NOTE: After every change in configuration file we have to restart the server.
+	
+	PHP
+
+What is php?
+	PHP is a server side programming language which helps to host dynamic web pages.
+
+How and when to install PHP?
+	Always PHP should be installed after installing the web server,
+	PHP creates a configuration file of its own and a configuration file inside the httpd serve.
+			
+			yum -y install php 
+
+Where whill PHP configuration files create?
+			/etc/httpd/conf.d/php.conf ------------------------> PHP and apache configuration file
+			/etc/php.ini 		   ------------------------> Configuration file of PHP
+
+How do webserver and PHP work together?
+
+				request
+       	(execute)PHP engine<----<----<--{------------}      
+			 |		{	     }<---------<------<		
+			 |		{   Apache   }		        BROWSER in html			BROWSER ONLY UNDERSTANDS HTML
+			 V     		{ 	     }->----->---->---->				BUT USERS NEED DYNAMIC WEBSITES	
+			HTML->---->---->{------------}      						SO PHP ENGINES ARE USED
+				result
+
+
+How to add static(HTML) and dynamic(PHP) web pages?
+	Just place the html or dybamic_page.php inside the /var/www/html/filename.php ------> For Php file
+							   /var/www/html/filename     ------> For html file
+
+	TROUBLE SHOOT
+How to trouble shoot apache server?
+	Vist the log files
+		vi /var/							??????????????????????????????????????????????????????????????????????????
+
+
+*************************************************************************************************************************************************************
+
+
+	DATABASE
+What is a database?
+	a structured set of data held in a computer.
+
+Why do we use a database?
+	It can access precise information from huge data.
+
+How can it work that fast?
+	Because of indexing(presored data)
+Some of the databases
+				Relational		No sql
+			Ms-SQl			Mango
+			MySQL
+			MarisDB
+			DB2
+			PgSql
+			Arora
+			Oracle
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

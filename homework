@@ -1,0 +1,18 @@
+#!/bin/bash
+##########################################################
+# Purpose 	: To learn shell scripting
+# version	: 1.0
+# Owner		: Krishna
+# Email		: krishna.chikballa@gmail.com
+# Date		: 07-11-2017
+# Input 	: None
+# Output	: Changes files, Automates LAMP setup
+########################################################
+
+# HOMEWORK 1
+# Develop a script to show the normal users from the /etc/passwd file		  HINT: if PID >= 1000 then normal user in RHEL and centos
+awk F: ' $3 > 999 { print #1 }' /etc/passwd
+awk F: ' $3 > 999 && $3 < 1050 { print #1 }' /etc/passwd
+# HOMEWORK 2
+# Edit the /etc/hostname by replacing the host name
+sed -i -e 's/chef-server/krishna-server/' hostttt	

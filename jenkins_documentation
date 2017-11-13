@@ -1,0 +1,21 @@
+What is Continuous Integration (CI)?
+	CI is the practice of merging of all the developers code to a shared repository several times a day. Each checkin is then verified by automatedbuild, allowing  	teams to detect problems early.
+	
+How to install a stand alone Jenkins server?
+	1. Install Java
+		yum install java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64
+	2. Download the jenkins.war file
+		wget https://updates.jenkins-ci.org/download/war/2.87/jenkins.war
+	3. Stop the firewall and SELinux settings
+		systemctl stop firewalld.service  ----------->stop firewall
+		setenforce=0
+		    (or)
+		vi /etc/selinux/config
+		selinux=permissive
+	4. Start the java server
+		java -jar jenkins.war
+How to connect to my stand alone Jenkins server?
+	Open browser and connect to 
+		<IPAddress>:8080
+
+	

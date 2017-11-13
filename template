@@ -1,0 +1,11 @@
+#!/bin/bash
+##########################################################
+# Purpose 	: To learn shell scripting
+# version	: 1.0
+# Owner		: Krishna
+# Email		: krishna.chikballa@gmail.com
+# Date		: 07-11-2017
+# Input 	: None
+# Output	: Changes files, Automates LAMP setup
+########################################################
+
